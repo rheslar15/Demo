@@ -1,15 +1,24 @@
 package com.liro.applications.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.liro.applications.myapplication.Interface.CustomAlertDialog;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -21,9 +30,10 @@ public class FullscreenActivity extends AppCompatActivity {
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static String UserName;
-
-    private static final boolean AUTO_HIDE = true;
-
+    private static String PassWord;
+    final Context context = this;
+    private static final boolean AUTO_HIDE = false;
+    private MainActivity MainActivity;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -117,10 +127,12 @@ public class FullscreenActivity extends AppCompatActivity {
 
         EditText view = (EditText)findViewById(R.id.editUserName);
         view.requestFocus();
+        //view.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         //view.setTextIsSelectable(true);
         //view.setRawInputType(InputType.TYPE_CLASS_TEXT);
         view.addTextChangedListener(new TextWatcher() {
             @Override
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 UserName = s.toString();
@@ -129,16 +141,131 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                EditText view = (EditText)findViewById(R.id.editPassword);
-                view.requestFocus();
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                //EditText view = (EditText)findViewById(R.id.editPassword);
+                //view.requestFocus();
 
             }
         });
+
+        view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    //performSearch();
+                    EditText view = (EditText)findViewById(R.id.editPassword);
+                    view.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        EditText view1 = (EditText)findViewById(R.id.editPassword);
+
+        view1.addTextChangedListener(new TextWatcher() {
+            @Override
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                PassWord = s.toString();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //EditText view = (EditText)findViewById(R.id.editPassword);
+                //view.requestFocus();
+
+            }
+        });
+
+        Button Btn = (Button)findViewById(R.id.dummy_button);
+
+        Btn.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                CustomAlertDialog CustomAlertDialog =  new CustomAlertDialog(context, "Warning", "Click yes to Exit", "Yes", "No", false, mButtonListener1, mButtonListener2
+
+                 );
+
+                CustomAlertDialog.CreateAndShow();
+
+                //CustomAlertDialog.show();
+                //AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                //alertDialogBuilder.setTitle("Warning");
+                //alertDialogBuilder.setMessage("Click yes to exit");
+                //alertDialogBuilder.setCancelable(false);
+                //alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    //public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        //FullscreenActivity.this.finish();
+                    //}
+                //});
+                //alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    //public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        //dialog.cancel();
+                    //}
+               // });
+
+                //AlertDialog alertDialog = alertDialogBuilder.create();
+                //alertDialog.show();
+            }
+        });
+    }
+
+
+    public DialogInterface.OnClickListener mButtonListener1 = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            startActivity(new Intent(FullscreenActivity.this, MainActivity.class));
+
+        }
+
+
+    };
+
+
+    public DialogInterface.OnClickListener mButtonListener2 = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.cancel();
+        }
+
+
+    };
+
+
+
+    private void launchLoginActivity() {
+        Intent mainActivity = new Intent(this, FullscreenActivity.class);
+
+        startActivity(mainActivity);
+        //this.overridePendingTransition(R.anim.abc_fade_in, R.anim.activity_no_transition);
+    }
+
+    private void launchMainActivity() {
+        //MainActivity = new MainActivity();
+        Intent mainActivity = new Intent(this, MainActivity.class);
+
+        startActivity(mainActivity);
+        //this.overridePendingTransition(R.anim.abc_fade_in, R.anim.activity_no_transition);
     }
 
     @Override
