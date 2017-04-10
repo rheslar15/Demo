@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.liro.applications.myapplication.Interface.CustomAlertDialog;
+import com.liro.applications.myapplication.Models.AuthenticationRes;
+import com.liro.applications.myapplication.Services.MockRestService;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -196,11 +198,36 @@ public class FullscreenActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                CustomAlertDialog CustomAlertDialog =  new CustomAlertDialog(context, "Warning", "Click yes to Exit", "Yes", "No", false, mButtonListener1, mButtonListener2
+                // login in to system
+                if (UserName.isEmpty() || PassWord.isEmpty())
+                {
+                    CustomAlertDialog CustomAlertDialog = new CustomAlertDialog(context, "Warning", "Please Enter a User Name and Password", "Ok","", false, mButtonListener1, mButtonListener2, false
 
-                 );
+                    );
 
-                CustomAlertDialog.CreateAndShow();
+                    CustomAlertDialog.CreateAndShow();
+                }
+                else {
+                    if (UserName.isEmpty()) {
+                        CustomAlertDialog CustomAlertDialog = new CustomAlertDialog(context, "Warning", "Please Enter a User Name", "Ok","", false, mButtonListener1, mButtonListener2, false
+
+                        );
+
+                        CustomAlertDialog.CreateAndShow();
+                    }
+                    else if (PassWord.isEmpty()) {
+                        CustomAlertDialog CustomAlertDialog = new CustomAlertDialog(context, "Warning", "Please Enter a Password", "Ok","", false, mButtonListener1, mButtonListener2, false
+
+                        );
+
+                        CustomAlertDialog.CreateAndShow();
+                    }
+                    else {
+                        AuthenticationRes result = MockRestService.GetUser(UserName, PassWord);
+                    }
+
+
+                }
 
                 //CustomAlertDialog.show();
                 //AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

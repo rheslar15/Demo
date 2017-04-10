@@ -15,7 +15,7 @@ public class CustomAlertDialog extends AlertDialog {
     private AlertDialog AlertDialog;
 
     public CustomAlertDialog(@NonNull Context context, String Title, String Message, String FirstButtonText,
-                             String SecondButtonText, boolean Cancelable, DialogInterface.OnClickListener PositiveButtonListener, DialogInterface.OnClickListener NegativeButtonListener) {
+                             String SecondButtonText, boolean Cancelable, DialogInterface.OnClickListener PositiveButtonListener, DialogInterface.OnClickListener NegativeButtonListener, boolean SecondButtonVisible) {
         super(context);
         this.context = context;
         alertDialogBuilder = new Builder(this.context);
@@ -23,7 +23,9 @@ public class CustomAlertDialog extends AlertDialog {
         alertDialogBuilder.setMessage(Message);
         alertDialogBuilder.setCancelable(Cancelable);
         alertDialogBuilder.setPositiveButton(FirstButtonText, PositiveButtonListener);
-        alertDialogBuilder.setNegativeButton(SecondButtonText, NegativeButtonListener);
+        if (SecondButtonVisible) {
+            alertDialogBuilder.setNegativeButton(SecondButtonText, NegativeButtonListener);
+        }
     }
 
     public void CreateAndShow()
