@@ -28,6 +28,17 @@
         android:fitsSystemWindows="true">
 
 
+        <Button
+            android:id="@+id/dummy_button"
+            style="?metaButtonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:onClick="setmControlsView"
+            android:text="@string/dummy_button"
+            android:textColor="@android:color/background_light" />
+
         <EditText
             android:id="@+id/editUserName"
             android:layout_width="280dp"
@@ -64,21 +75,11 @@
             android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
-
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:onClick="setmControlsView"
-                android:text="@string/dummy_button"
-                android:textColor="@android:color/background_light" />
 
         </LinearLayout>
     </FrameLayout>
